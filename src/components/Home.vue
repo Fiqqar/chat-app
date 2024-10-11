@@ -147,19 +147,22 @@
 export default {
     name: 'Home',
     props: {
-    message: null 
+      message: null ,
+      username: "Fiqar"
     },
     methods: {
-        send_message() {
-            try {
-    const docRef = await addDoc(collection(db, "chat"), {
-    chat: this.message,
-});
-    console.log("Document written with ID: ", docRef.id);
-} catch (e) {
-    console.error("Error adding document: ", e);
-}
-        }
+      send_message() {
+        // Add a new document in collection "Username"
+        db.collection("Fiqqar").doc("Fiqqar").set({
+          message: this.message
+        })
+        .then(() => {
+            console.log("Document successfully written!");
+        })
+        .catch((error) => {
+            console.error("Error writing document: ", error);
+        });
+              }
     }
 }
 </script>
