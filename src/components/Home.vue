@@ -95,7 +95,7 @@
               <div class="incoming_msg_img" vfor> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
               <div class="received_msg">
                 <div class="received_withd_msg">
-                  <p>{{ item.message}}</p>
+                  <p>{{ item.message }}</p>
                   <span class="time_date">{{ item.date }}</span></div>
               </div>
             </div>
@@ -139,7 +139,7 @@ export default {
         }, 
       read_message() {
         let allMessages = [];
-        db.collection("Fiqqar").orderBy("date").get().then((querySnapshot) => {
+        db.collection("Fiqqar").orderBy("date").onSnapshot((querySnapshot) => {
         querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
