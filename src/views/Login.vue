@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import * as firebase from 'firebase/compat/app'; 
+// import * as firebase from 'firebase/compat/app'; 
 export default {
     methods: {
         login () {
-            var provider = new firebase.auth.GoogleAuthProvider();
+            // var provider = new firebase.auth.GoogleAuthProvider();
             // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
             // firebase.auth()
             // .signInWithPopup(provider)

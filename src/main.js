@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 // Import the functions you need from the SDKs you need
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,13 +26,12 @@ const firebaseConfig = {
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://support.google.com/firebase/answer/7015592
 
-/// Initialize Firebase
-var app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 
 // Initialize Cloud Firestore and get a reference to the service
 const database = firebase.firestore();
-const auth = getAuth(app);
+// const auth = getAuth(app);
 
 window.db = database;
 
