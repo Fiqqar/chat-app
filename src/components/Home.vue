@@ -146,11 +146,11 @@ export default {
       this.message = null;
     },
     read_message() {
-      let allMessages = [];
       db.collection("Fiqqar").orderBy("date").onSnapshot((querySnapshot) => {
+        let allMessages = [];
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
+          // console.log(doc.id, " => ", doc.data());
           allMessages.push(doc.data())
         });
         this.messages = allMessages;
