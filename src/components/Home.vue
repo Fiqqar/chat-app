@@ -90,8 +90,8 @@
             </div>
           </div>
         </div>
-        <div class="mesgs">
-          <div class="msg_history">
+        <div class="mesgs" id="mesgs">
+          <div class="msg_history" id="msg_history">
             <div class="incoming_msg" v-for="item in messages">
               <div class="incoming_msg_img" vfor> <img src="https://ptetutorials.com/images/user-profile.png"
                   alt="sunil"> </div>
@@ -129,6 +129,11 @@ export default {
     messages: []
   },
   methods: {
+    scrollDown() {
+      var container = this.$el.querySelector("#msg_history");
+      window.scrollTo(0, container.scrollHeight);
+      console.log(container.scrollHeight)
+    },
     send_message() {
       // Add a new document in collection "Username"
       let date = new Date()
@@ -159,6 +164,9 @@ export default {
   },
   created() {
     this.read_message()
+  },
+  updated() {
+    this.scrollDown()
   }
 }
 </script>
