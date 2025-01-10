@@ -136,7 +136,10 @@ export default {
     },
     send_message() {
       // Add a new document in collection "Username"
-      let date = new Date()
+      if (this.message == null) {
+        return;
+      } else {
+        let date = new Date()
       db.collection("Fiqqar").add({
         message: this.message,
         date: new Date(),
@@ -149,6 +152,7 @@ export default {
           console.error("Error writing document: ", error);
         });
       this.message = null;
+      }
     },
     read_message() {
       db.collection("Fiqqar").orderBy("date").onSnapshot((querySnapshot) => {

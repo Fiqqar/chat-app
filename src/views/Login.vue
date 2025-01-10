@@ -1,8 +1,11 @@
 <template>
     <div>
         <h3>Please login with your google account</h3>
-        <button @click="login">Login with email</button>
+        <button @click="loginSubmit">Login with email</button>
         <button @click="register">Register with email</button>
+        <input type="email" placeholder="Type your email here" v-model="email">
+        <input type="password" placeholder="Type your password here" v-model="password">
+        <input type="password" placeholder="Confirm your password" v-model="passwordConfirm">
         <modal v-if="showModal" @close="showModal = false">
             <transition name="modal">
                 <div class="modal-mask">
@@ -24,7 +27,8 @@
                                 <div class="form-group">
                                     <label for="remember-me" class="text-info"><span>Remember me</span><span><input
                                                 id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                                    <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                    <input type="submit" name="submit" class="btn btn-info btn-md" value="submit"
+                                        @click="login">
                                 </div>
                                 <div id="register-link" class="text-right">
                                     <a href="#" class="text-info">Register here</a>
@@ -41,15 +45,48 @@
 
 <script>
 // import * as firebase from 'firebase/compat/app'; 
+import firebase from 'firebase/compat/app';
 export default {
     props: {
         showModal: false,
+        email: "",
+        password: "",
+        passwordConfirm: "",
     },
     methods: {
         login() {
             this.showModal = true;
         },
+        loginSubmit() {
+            firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+                .then((userCredential) => {
+                    // Signed in
+                    var user = userCredential.user;
+                    alert('success');
+                    this.$router.push('/home')
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert('login error: ' + errorCode + ' ' + errorMessage)
+                });
+        },
         register() {
+            if (this.password == this.passwordConfirm) {
+                firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+                    .then((userCredential) => {
+                        // Signed in 
+                        var user = userCredential.user;
+                        // ...
+                    })
+                    .catch((error) => {
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // ..
+                    });
+            } else {
+                alert('password didnt match! Please try again')
+            }
         }
     }
 }
