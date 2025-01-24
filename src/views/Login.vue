@@ -3,7 +3,8 @@
         <h3>Please login with your google account</h3>
         <button @click="loginSubmit">Login with email</button>
         <button @click="register">Register with email</button>
-        <input type="email" placeholder="Type your email here" v-model="email">
+        <button @click="forgetPW">Forgot Password</button>
+        <input type="email" placeholder="Type your email here" v-model="email" required>
         <input type="password" placeholder="Type your password here" v-model="password">
         <input type="password" placeholder="Confirm your password" v-model="passwordConfirm">
         <modal v-if="showModal" @close="showModal = false">
@@ -58,7 +59,10 @@ export default {
             this.showModal = true;
         },
         loginSubmit() {
-            firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+            if (this.password == null) {
+                alert("Password is cannot be empty")
+            } else {
+                firebase.auth().signInWithEmailAndPassword(this.email, this.password)
                 .then((userCredential) => {
                     // Signed in
                     var user = userCredential.user;
@@ -70,9 +74,14 @@ export default {
                     var errorMessage = error.message;
                     alert('login error: ' + errorCode + ' ' + errorMessage)
                 });
+            }
+            
         },
         register() {
-            if (this.password == this.passwordConfirm) {
+            if (this.password == null) {
+                alert("Password is cannot be empty")
+            }
+            else if (this.password == this.passwordConfirm) {
                 firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
                     .then((userCredential) => {
                         // Signed in 
@@ -82,12 +91,25 @@ export default {
                     .catch((error) => {
                         var errorCode = error.code;
                         var errorMessage = error.message;
-                        // ..
+                        alert('register error: ' + errorCode + ' ' + errorMessage)
                     });
-            } else {
+            }
+            else {
                 alert('password didnt match! Please try again')
             }
-        }
+        },
+        forgetPW() {
+            firebase.auth().sendPasswordResetEmail(this.email)
+                .then(() => {
+                    // Password reset email sent!
+                    // ..
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert('register error: ' + errorCode + ' ' + errorMessage)
+                });
+        },
     }
 }
 </script>
